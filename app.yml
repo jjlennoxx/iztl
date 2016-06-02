@@ -1,0 +1,7 @@
+sessionTimeoutInSeconds: 10
+
+database:
+  driverClass: org.h2.Driver
+  user: root
+  password: r00t
+  url: jdbc:h2:mem:./target/example;MV_STORE=FALSE;MVCC=FALSE
