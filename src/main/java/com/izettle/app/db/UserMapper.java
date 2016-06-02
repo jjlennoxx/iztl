@@ -10,6 +10,6 @@ import java.sql.SQLException;
 public class UserMapper implements ResultSetMapper<User> {
 
     public User map(int i, ResultSet rs, StatementContext statementContext) throws SQLException {
-        return new User(rs.getLong("id"), rs.getString("username"), rs.getString("password"));
+        return new User(rs.getLong("id"), rs.getString("username"), rs.getString("token"));
     }
 }

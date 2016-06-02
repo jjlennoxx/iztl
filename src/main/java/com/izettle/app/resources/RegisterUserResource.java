@@ -2,6 +2,7 @@ package com.izettle.app.resources;
 
 import com.izettle.app.api.StandardResult;
 import com.izettle.app.db.UserDAO;
+import com.izettle.app.security.*;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,11 +15,13 @@ import java.util.concurrent.atomic.AtomicLong;
 @Produces(MediaType.APPLICATION_JSON)
 public class RegisterUserResource {
 
-	private final AtomicLong counter;
 	private final UserDAO userDAO;
+	private final PasswordAuthentication crypto;
+	private final AtomicLong counter;
 
 	public RegisterUserResource(UserDAO userDAO) {
 		this.userDAO = userDAO;
+		this.crypto = new PasswordAuthentication();
 		this.counter = new AtomicLong();
 	}
 
@@ -27,7 +30,8 @@ public class RegisterUserResource {
 		boolean successful = false;
 		long id = counter.incrementAndGet();
 		if (userDAO.findUserByUsername(username) == null) {
-			userDAO.insert(id, username, password);
+			String token = crypto.hash(password.toCharArray());
+			userDAO.insertNewUser(id, username, token);
 			successful = true;
 		}
 		return new StandardResult(id, successful);

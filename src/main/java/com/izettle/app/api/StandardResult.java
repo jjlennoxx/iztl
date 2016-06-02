@@ -9,7 +9,7 @@ public class StandardResult {
 
 	public StandardResult() {}
 
-	public StandardResult(long id, Boolean successful) {
+	public StandardResult(Long id, Boolean successful) {
 		this.id = id;
 		this.successful = successful;
 	}

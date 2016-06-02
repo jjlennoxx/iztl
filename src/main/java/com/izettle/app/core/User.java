@@ -4,12 +4,12 @@ public class User {
 
     private final Long id;
     private final String username;
-    private final String password;
+    private final String token;
 
-    public User(Long id, String username, String password) {
+    public User(Long id, String username, String token) {
         this.id = id;
         this.username = username;
-        this.password = password;
+        this.token = token;
     }
 
     public Long getId() {
@@ -20,8 +20,8 @@ public class User {
         return username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getToken() {
+        return token;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class User {
 
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        return password != null ? password.equals(user.password) : user.password == null;
+        return token != null ? token.equals(user.token) : user.token == null;
 
     }
 
@@ -41,7 +41,7 @@ public class User {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (token != null ? token.hashCode() : 0);
         return result;
     }
 }

@@ -13,6 +13,9 @@ import java.util.List;
 @RegisterMapper(UserSessionMapper.class)
 public interface UserSessionDAO {
 
+    @SqlUpdate("drop table user_session if exists")
+    void dropUserSessionTable();
+
     @SqlUpdate("create table user_session (id long auto_increment primary key, user_id long, timestamp timestamp(8))")
     void createUserSessionTable();
 

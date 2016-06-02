@@ -15,13 +15,11 @@ public class ListTimestampsResource {
 
     private final UserDAO userDAO;
     private final UserSessionDAO userSessionDAO;
-    private final Integer sessionTimeoutInSeconds;
     private final AtomicLong counter;
 
-    public ListTimestampsResource(UserDAO userDAO, UserSessionDAO userSessionDAO, Integer sessionTimeoutInSeconds) {
+    public ListTimestampsResource(UserDAO userDAO, UserSessionDAO userSessionDAO) {
         this.userDAO = userDAO;
         this.userSessionDAO = userSessionDAO;
-        this.sessionTimeoutInSeconds = sessionTimeoutInSeconds;
         this.counter = new AtomicLong();
     }
 
