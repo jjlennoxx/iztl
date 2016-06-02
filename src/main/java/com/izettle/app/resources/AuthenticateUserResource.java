@@ -1,17 +1,12 @@
 package com.izettle.app.resources;
 
-import com.izettle.app.api.AuthenticationResult;
-import com.izettle.app.api.Result;
-import com.izettle.app.db.UserDAO;
-import com.izettle.app.db.UserSessionDAO;
+import com.izettle.app.api.*;
+import com.izettle.app.db.*;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import java.sql.Timestamp;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.sql.*;
+import java.util.concurrent.atomic.*;
 
 @Path("/authenticate")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,17 +25,22 @@ public class AuthenticateUserResource {
     }
 
     @POST
-    public Result register(@QueryParam("username") String username, @QueryParam("password") String password) {
+    public AuthenticationResult register(@QueryParam("username") String username,
+                                         @QueryParam("password") String password) {
+        Boolean successful = false;
+        Long sessionId = null;
+
         Long userId = userDAO.findIdByUsernameAndPassword(username, password);
         if (userId != null) {
             Timestamp nowMinusSessionTimeout = new Timestamp(
                     System.currentTimeMillis() - (sessionTimeoutInSeconds * 1000));
-            Long sessionId = userSessionDAO.findIdByUserIdAndTimeout(userId, nowMinusSessionTimeout);
+            sessionId = userSessionDAO.findIdByUserIdAndTimeout(userId, nowMinusSessionTimeout);
             if (sessionId == null) {
                 sessionId = userSessionDAO.createUserSessionForUserId(userId);
             }
-            return new AuthenticationResult(counter.incrementAndGet(), sessionId, true);
+            successful = true;
         }
-        return new Result(counter.incrementAndGet(), false);
+
+        return new AuthenticationResult(counter.incrementAndGet(), successful, sessionId);
     }
 }

@@ -1,26 +1,23 @@
 package com.izettle.app.api;
 
-import com.fasterxml.jackson.annotation.*;
-import com.google.common.base.MoreObjects;
+import com.google.common.base.*;
 
-public class Result {
+public class StandardResult {
 
 	private Long id;
 	private Boolean successful;
 
-	public Result() {}
+	public StandardResult() {}
 
-	public Result(long id, Boolean successful) {
+	public StandardResult(long id, Boolean successful) {
 		this.id = id;
 		this.successful = successful;
 	}
 
-	@JsonProperty
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	@JsonProperty
 	public Boolean isSuccessful() {
 		return successful;
 	}

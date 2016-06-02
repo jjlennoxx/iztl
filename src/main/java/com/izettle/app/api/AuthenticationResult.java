@@ -1,19 +1,31 @@
 package com.izettle.app.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.MoreObjects;
+import com.google.common.base.*;
 
-public class AuthenticationResult extends Result {
+public class AuthenticationResult {
+
+    private Long id;
+    private Boolean successful;
 
     private Long sessionId;
 
-    public AuthenticationResult(Long id, Long sessionId, Boolean successful) {
-        super(id, successful);
+    public AuthenticationResult() {}
+
+    public AuthenticationResult(Long id, Boolean successful, Long sessionId) {
+        this.id = id;
+        this.successful = successful;
         this.sessionId = sessionId;
     }
 
-    @JsonProperty
-    public long getSessionId() {
+    public Long getId() {
+        return id;
+    }
+
+    public Boolean isSuccessful() {
+        return successful;
+    }
+
+    public Long getSessionId() {
         return sessionId;
     }
 

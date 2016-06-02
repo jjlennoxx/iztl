@@ -1,18 +1,13 @@
 package com.izettle.app.resources;
 
-import com.izettle.app.api.Result;
-import com.izettle.app.api.TimestampsResult;
-import com.izettle.app.core.UserSession;
-import com.izettle.app.db.UserDAO;
-import com.izettle.app.db.UserSessionDAO;
+import com.izettle.app.api.*;
+import com.izettle.app.core.*;
+import com.izettle.app.db.*;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
 
 @Path("/listTimestamps")
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,15 +26,18 @@ public class ListTimestampsResource {
     }
 
     @POST
-    public Result register(@QueryParam("username") String username, @QueryParam("sessionId") Long sessionId) {
+    public TimestampsResult register(@QueryParam("username") String username, @QueryParam("sessionId") Long sessionId) {
+        Boolean successful = false;
+        List<UserSession> userSessions = Collections.EMPTY_LIST;
+
         Long userId = userDAO.findIdByUsername(username);
         if (userId != null) {
             long actualSessionId = userSessionDAO.findIdByUserId(userId);
             if (actualSessionId == sessionId) {
-                List<UserSession> userSessions = userSessionDAO.findLastUserTimestamps(userId, 5);
-                return new TimestampsResult(counter.incrementAndGet(), true, userSessions);
+                userSessions = userSessionDAO.findLastUserTimestamps(userId, 5);
+                successful = true;
             }
         }
-        return new Result(counter.incrementAndGet(), false);
+        return new TimestampsResult(counter.incrementAndGet(), successful, userSessions);
     }
 }

@@ -1,6 +1,6 @@
 package com.izettle.app.resources;
 
-import com.izettle.app.api.Result;
+import com.izettle.app.api.StandardResult;
 import com.izettle.app.db.UserDAO;
 
 import javax.ws.rs.POST;
@@ -23,13 +23,13 @@ public class RegisterUserResource {
 	}
 
 	@POST
-	public Result register(@QueryParam("username") String username, @QueryParam("password") String password) {
+	public StandardResult register(@QueryParam("username") String username, @QueryParam("password") String password) {
 		boolean successful = false;
 		long id = counter.incrementAndGet();
 		if (userDAO.findUserByUsername(username) == null) {
 			userDAO.insert(id, username, password);
 			successful = true;
 		}
-		return new Result(id, successful);
+		return new StandardResult(id, successful);
 	}
 }
