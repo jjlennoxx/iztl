@@ -1,9 +1,10 @@
 package com.izettle.app.resources;
 
 import com.izettle.app.api.*;
+import com.izettle.app.auth.*;
 import com.izettle.app.core.*;
 import com.izettle.app.db.*;
-import com.izettle.app.security.*;
+import org.hibernate.validator.constraints.*;
 import org.slf4j.*;
 
 import javax.ws.rs.*;
@@ -31,8 +32,8 @@ public class AuthenticateUserResource {
     }
 
     @POST
-    public AuthenticationResult execute(@QueryParam("username") String username,
-                                        @QueryParam("password") String password) {
+    public AuthenticationResult execute(@QueryParam("username") @NotBlank String username,
+                                        @QueryParam("password") @NotBlank String password) {
         Boolean successful = false;
         Long sessionId = null;
 

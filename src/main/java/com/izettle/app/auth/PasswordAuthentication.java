@@ -1,4 +1,4 @@
-package com.izettle.app.security;
+package com.izettle.app.auth;
 
 import javax.crypto.*;
 import javax.crypto.spec.*;

@@ -76,8 +76,7 @@ public class iZettleClientTest {
         assertNotNull(timestampsResult.getTimestampList());
 
         System.out.println("username: " + username
-                                   + "\nsession_id: " + authenticationResult.getSessionId()
-                                   + "\ntimestamps:");
+                                   + "\nsession_id: " + authenticationResult.getSessionId() + "\ntimestamps:");
         timestampsResult.getTimestampList().stream().forEach(System.out::println);
         System.out.println();
 

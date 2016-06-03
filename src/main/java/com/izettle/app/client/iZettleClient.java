@@ -2,8 +2,7 @@ package com.izettle.app.client;
 
 import com.izettle.app.api.*;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.*;
 
 public class iZettleClient {
 

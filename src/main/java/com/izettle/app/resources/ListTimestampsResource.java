@@ -3,7 +3,9 @@ package com.izettle.app.resources;
 import com.izettle.app.api.*;
 import com.izettle.app.core.*;
 import com.izettle.app.db.*;
+import org.hibernate.validator.constraints.*;
 
+import javax.validation.constraints.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.*;
@@ -24,7 +26,8 @@ public class ListTimestampsResource {
     }
 
     @POST
-    public TimestampsResult execute(@QueryParam("username") String username, @QueryParam("sessionId") Long sessionId) {
+    public TimestampsResult execute(@QueryParam("username") @NotBlank String username,
+                                    @QueryParam("sessionId") @NotNull Long sessionId) {
         Boolean successful = false;
         List<UserSession> userSessions = Collections.EMPTY_LIST;
 

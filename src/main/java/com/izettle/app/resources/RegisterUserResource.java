@@ -1,16 +1,14 @@
 package com.izettle.app.resources;
 
-import com.izettle.app.api.StandardResult;
-import com.izettle.app.db.UserDAO;
-import com.izettle.app.security.*;
+import com.izettle.app.api.*;
+import com.izettle.app.auth.*;
+import com.izettle.app.db.*;
+import org.hibernate.validator.constraints.*;
 import org.slf4j.*;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.util.concurrent.atomic.*;
 
 @Path("/register")
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,15 +26,15 @@ public class RegisterUserResource {
 	}
 
 	@POST
-	public StandardResult execute(@QueryParam("username") String username, @QueryParam("password") String password) {
+	public StandardResult execute(@QueryParam("username") @NotBlank String username,
+	                              @QueryParam("password") @NotBlank String password) {
 		boolean successful = false;
-		long id = counter.incrementAndGet();
 		if (userDAO.findUserByUsername(username) == null) {
 			String token = crypto.hash(password.toCharArray());
-			userDAO.insertNewUser(id, username, token);
+			long id = userDAO.createNewUser(username, token);
 			log.info("New user with username {} and id {} registered!", username, id);
 			successful = true;
 		}
-		return new StandardResult(id, successful);
+		return new StandardResult(counter.incrementAndGet(), successful);
 	}
 }

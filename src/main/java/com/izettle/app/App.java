@@ -32,7 +32,6 @@ public class App extends Application<AppConfiguration> {
 		environment.jersey().register(new AuthenticateUserResource(userDAO, userSessionDAO, sessionTimeoutInSeconds));
 		environment.jersey().register(new ListTimestampsResource(userDAO, userSessionDAO));
 		environment.jersey().register(new EmptyTablesResource(userDAO, userSessionDAO));
-//		environment.healthChecks().register("template", new TemplateHealthCheck(configuration.getTemplate()));
 
 		userDAO.createUserTable();
 		userSessionDAO.createUserSessionTable();
