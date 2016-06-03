@@ -70,13 +70,17 @@ public class iZettleClientTest {
     private void authenticateAndListTimestamps(String username, String password) throws InterruptedException {
         AuthenticationResult authenticationResult = target.authenticateUser(username, password);
         assertEquals(authenticationResult.isSuccessful(), true);
+
         TimestampsResult timestampsResult = target.listUserTimestamps(username, authenticationResult.getSessionId());
         assertEquals(timestampsResult.isSuccessful(), true);
         assertNotNull(timestampsResult.getTimestampList());
-        System.out.println("username: " + username + "\nsession_id: " + authenticationResult.getSessionId()
+
+        System.out.println("username: " + username
+                                   + "\nsession_id: " + authenticationResult.getSessionId()
                                    + "\ntimestamps:");
         timestampsResult.getTimestampList().stream().forEach(System.out::println);
         System.out.println();
+
         Thread.sleep(3000);
     }
 }

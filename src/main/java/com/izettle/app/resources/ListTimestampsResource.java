@@ -24,7 +24,7 @@ public class ListTimestampsResource {
     }
 
     @POST
-    public TimestampsResult register(@QueryParam("username") String username, @QueryParam("sessionId") Long sessionId) {
+    public TimestampsResult execute(@QueryParam("username") String username, @QueryParam("sessionId") Long sessionId) {
         Boolean successful = false;
         List<UserSession> userSessions = Collections.EMPTY_LIST;
 

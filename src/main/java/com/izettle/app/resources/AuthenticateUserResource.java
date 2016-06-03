@@ -23,14 +23,14 @@ public class AuthenticateUserResource {
     public AuthenticateUserResource(UserDAO userDAO, UserSessionDAO userSessionDAO, Integer sessionTimeoutInSeconds) {
         this.userDAO = userDAO;
         this.userSessionDAO = userSessionDAO;
-        this.crypto = new PasswordAuthentication();
         this.sessionTimeoutInSeconds = sessionTimeoutInSeconds;
+        this.crypto = new PasswordAuthentication();
         this.counter = new AtomicLong();
     }
 
     @POST
-    public AuthenticationResult register(@QueryParam("username") String username,
-                                         @QueryParam("password") String password) {
+    public AuthenticationResult execute(@QueryParam("username") String username,
+                                        @QueryParam("password") String password) {
         Boolean successful = false;
         Long sessionId = null;
 

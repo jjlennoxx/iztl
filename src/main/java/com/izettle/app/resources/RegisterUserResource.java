@@ -26,7 +26,7 @@ public class RegisterUserResource {
 	}
 
 	@POST
-	public StandardResult register(@QueryParam("username") String username, @QueryParam("password") String password) {
+	public StandardResult execute(@QueryParam("username") String username, @QueryParam("password") String password) {
 		boolean successful = false;
 		long id = counter.incrementAndGet();
 		if (userDAO.findUserByUsername(username) == null) {

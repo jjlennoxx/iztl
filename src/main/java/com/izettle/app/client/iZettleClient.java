@@ -20,7 +20,8 @@ public class iZettleClient {
     }
 
     public StandardResult registerUser(String username, String password) {
-        return client.target(addr + registerResourceAddr)
+        return client.target(addr)
+                     .path(registerResourceAddr)
                      .queryParam("username", username)
                      .queryParam("password", password)
                      .request()
@@ -29,7 +30,8 @@ public class iZettleClient {
     }
 
     public AuthenticationResult authenticateUser(String username, String password) {
-        return client.target(addr + authenticateResourceAddr)
+        return client.target(addr)
+                     .path(authenticateResourceAddr)
                      .queryParam("username", username)
                      .queryParam("password", password)
                      .request()
@@ -38,7 +40,8 @@ public class iZettleClient {
     }
 
     public TimestampsResult listUserTimestamps(String username, Long sessionId) {
-        return client.target(addr + listTimestampsResourceAddr)
+        return client.target(addr)
+                     .path(listTimestampsResourceAddr)
                      .queryParam("username", username)
                      .queryParam("sessionId", sessionId)
                      .request()
