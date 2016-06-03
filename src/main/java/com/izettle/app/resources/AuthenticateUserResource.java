@@ -4,6 +4,7 @@ import com.izettle.app.api.*;
 import com.izettle.app.core.*;
 import com.izettle.app.db.*;
 import com.izettle.app.security.*;
+import org.slf4j.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -13,6 +14,7 @@ import java.util.concurrent.atomic.*;
 @Path("/authenticate")
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthenticateUserResource {
+    private static final Logger log = LoggerFactory.getLogger(AuthenticateUserResource.class);
 
     private final UserDAO userDAO;
     private final UserSessionDAO userSessionDAO;
@@ -39,18 +41,22 @@ public class AuthenticateUserResource {
             String token = user.getToken();
             if (crypto.authenticate(password.toCharArray(), token)) {
                 long nowMinusSessionTimeout = System.currentTimeMillis() - (sessionTimeoutInSeconds * 1000);
-                Timestamp timestamp = new Timestamp(nowMinusSessionTimeout);
-                sessionId = getSessionId(user, timestamp);
+                Timestamp timeThreshold = new Timestamp(nowMinusSessionTimeout);
+                sessionId = getSessionId(user, timeThreshold);
                 successful = true;
             }
         }
         return new AuthenticationResult(counter.incrementAndGet(), successful, sessionId);
     }
 
-    private Long getSessionId(User user, Timestamp timestamp) {
-        Long sessionId = userSessionDAO.findIdByUserIdAndTimeout(user.getId(), timestamp);
+    private Long getSessionId(User user, Timestamp timeThreshold) {
+        long userId = user.getId();
+        Long sessionId = userSessionDAO.findIdByUserIdAndThreshold(userId, timeThreshold);
         if (sessionId == null) {
-            sessionId = userSessionDAO.createUserSessionForUserId(user.getId());
+            sessionId = userSessionDAO.createUserSessionForUserId(userId);
+            log.info("New user session for userId {}", userId);
+        } else {
+            log.info("User session for userId {} still active!", userId);
         }
         return sessionId;
     }

@@ -27,7 +27,7 @@ public interface UserSessionDAO {
     Long findIdByUserId(@Bind("userId") Long userId);
 
     @SqlQuery("select id from user_session where user_id = :userId and timestamp >= :nowMinusTimeout")
-    Long findIdByUserIdAndTimeout(@Bind("userId") Long userId, @Bind("nowMinusTimeout") Timestamp nowMinusTimeout);
+    Long findIdByUserIdAndThreshold(@Bind("userId") Long userId, @Bind("nowMinusTimeout") Timestamp nowMinusTimeout);
 
     @SqlQuery("select * from user_session where user_id = :userId order by id desc limit :numOfTimestamps")
     List<UserSession> findLastUserTimestamps(@Bind("userId") long userId, @Bind("numOfTimestamps") int numOfTimestamps);
