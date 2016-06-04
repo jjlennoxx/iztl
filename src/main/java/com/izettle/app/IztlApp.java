@@ -32,7 +32,7 @@ public class IztlApp extends Application<IztlAppConfig> {
 		final UserSessionDAO userSessionDAO = jdbi.onDemand(UserSessionDAO.class);
 
 		prepareDatabase(userDAO, userSessionDAO);
-		registerSecurityComponents(environment);
+		registerSecurityComponents(configuration, environment);
 		registerResourceEndpoints(configuration, environment, userDAO, userSessionDAO);
 	}
 
@@ -41,10 +41,10 @@ public class IztlApp extends Application<IztlAppConfig> {
 		userSessionDAO.createUserSessionTable();
 	}
 
-	private void registerSecurityComponents(Environment environment) {
+	private void registerSecurityComponents(IztlAppConfig configuration, Environment environment) {
 		environment.jersey().register(new AuthDynamicFeature(
 				new BasicCredentialAuthFilter.Builder<PrincipalUser>()
-						.setAuthenticator(new ResourcesAuthenticator())
+						.setAuthenticator(new ResourcesAuthenticator(configuration.getAuthorizedUsers()))
 						.setAuthorizer(new ResourcesAuthorizer())
 						.setRealm("iZettle Realm")
 						.buildAuthFilter()));
