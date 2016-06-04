@@ -12,7 +12,7 @@ import io.dropwizard.setup.*;
 import org.glassfish.jersey.server.filter.*;
 import org.skife.jdbi.v2.*;
 
-public class App extends Application<AppConfiguration> {
+public class IztlApp extends Application<IztlAppConfig> {
 
 	@Override
 	public String getName() {
@@ -20,12 +20,12 @@ public class App extends Application<AppConfiguration> {
 	}
 
 	@Override
-	public void initialize(Bootstrap<AppConfiguration> bootstrap) {
+	public void initialize(Bootstrap<IztlAppConfig> bootstrap) {
 		bootstrap.addBundle(new DBIExceptionsBundle());
 	}
 
 	@Override
-	public void run(AppConfiguration configuration, Environment environment) {
+	public void run(IztlAppConfig configuration, Environment environment) {
 		final DBIFactory factory = new DBIFactory();
 		final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "h2db");
 		final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
@@ -52,7 +52,7 @@ public class App extends Application<AppConfiguration> {
 		environment.jersey().register(new AuthValueFactoryProvider.Binder<>(PrincipalUser.class));
 	}
 
-	private void registerResourceEndpoints(AppConfiguration configuration, Environment environment, UserDAO userDAO,
+	private void registerResourceEndpoints(IztlAppConfig configuration, Environment environment, UserDAO userDAO,
 	                                       UserSessionDAO userSessionDAO) {
 		Integer sessionTimeoutInSeconds = Integer.valueOf(configuration.getSessionTimeoutInSeconds());
 		environment.jersey().register(new RegisterUserResource(userDAO));
@@ -62,6 +62,6 @@ public class App extends Application<AppConfiguration> {
 	}
 
 	public static void main(String[] args) throws Exception {
-		new App().run(args);
+		new IztlApp().run(args);
 	}
 }

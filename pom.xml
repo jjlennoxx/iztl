@@ -76,7 +76,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.izettle.app.App</mainClass>
+                                    <mainClass>com.izettle.app.IztlApp</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

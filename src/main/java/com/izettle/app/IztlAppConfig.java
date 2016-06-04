@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.*;
 import javax.validation.*;
 import javax.validation.constraints.*;
 
-public class AppConfiguration extends Configuration {
+public class IztlAppConfig extends Configuration {
 
 	@NotEmpty
 	private String sessionTimeoutInSeconds;
