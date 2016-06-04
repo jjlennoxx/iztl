@@ -1,8 +1,10 @@
 package com.izettle.app.resources;
 
 import com.izettle.app.api.*;
+import com.izettle.app.auth.*;
 import com.izettle.app.core.*;
 import com.izettle.app.db.*;
+import io.dropwizard.auth.*;
 import org.hibernate.validator.constraints.*;
 
 import javax.annotation.security.*;
@@ -48,7 +50,9 @@ public class ListTimestampsResource {
     @RolesAllowed("ADMIN")
     @POST
     @Path("admin")
-    public TimestampsResult executeAdmin(@QueryParam("username") @NotBlank String username) {
+    public TimestampsResult executeAdmin(@Auth PrincipalUser principalUser,
+                                         @QueryParam("username") @NotBlank String
+            username) {
         Boolean successful = false;
         List<UserSession> userSessions = Collections.EMPTY_LIST;
 
