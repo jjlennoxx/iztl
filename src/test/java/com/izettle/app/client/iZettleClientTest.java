@@ -12,7 +12,7 @@ public class iZettleClientTest {
 
     @Before
     public void setUp() throws Exception {
-        String addr = "http://localhost:8080";
+        String addr = "https://localhost:8443";
         target = new iZettleClient(addr);
         emptyTables = new EmptyTablesTestClient(addr);
     }
