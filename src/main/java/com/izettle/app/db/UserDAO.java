@@ -10,7 +10,7 @@ public interface UserDAO {
 	@SqlUpdate("drop table user if exists")
 	void dropUserTable();
 
-	@SqlUpdate("create table user (id long auto_increment primary key, username varchar(100), token varchar(100))")
+	@SqlUpdate("create table if not exists user (id long auto_increment primary key, username varchar(100), token varchar(100))")
 	void createUserTable();
 
 	@GetGeneratedKeys
