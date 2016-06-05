@@ -51,8 +51,7 @@ public class ListTimestampsResource {
     @POST
     @Path("admin")
     public TimestampsResult executeAdmin(@Auth PrincipalUser principalUser,
-                                         @QueryParam("username") @NotBlank String
-            username) {
+                                         @QueryParam("username") @NotBlank String username) {
         Boolean successful = false;
         List<UserSession> userSessions = Collections.EMPTY_LIST;
 

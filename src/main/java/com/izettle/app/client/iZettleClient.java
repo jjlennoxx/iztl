@@ -14,8 +14,12 @@ public class iZettleClient {
     private final Client client;
 
     public iZettleClient(String addr) {
+        this(addr, ClientBuilder.newClient());
+    }
+
+    public iZettleClient(String addr, Client client) {
         this.addr = addr;
-        this.client = ClientBuilder.newClient();
+        this.client = client;
     }
 
     public StandardResult registerUser(String username, String password) {
@@ -46,5 +50,18 @@ public class iZettleClient {
                      .request()
                      .post(null)
                      .readEntity(TimestampsResult.class);
+    }
+
+    public TimestampsResult adminListUserTimestamps(String username) {
+        return client.target(addr)
+                     .path(listTimestampsResourceAddr + "/admin")
+                     .queryParam("username", username)
+                     .request()
+                     .post(null)
+                     .readEntity(TimestampsResult.class);
+    }
+
+    public void close() {
+        client.close();
     }
 }

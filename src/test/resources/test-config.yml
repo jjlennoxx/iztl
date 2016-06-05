@@ -1,0 +1,27 @@
+sessionTimeoutInSeconds: 10
+
+authorizedUsers:
+  - name: antonio@iztl
+    password: 4xKjkQum
+    roles:
+      - "USER"
+  - name: admin@iztl
+    password: xNRMwepr
+    roles:
+      - "USER"
+      - "ADMIN"
+
+server:
+  applicationConnectors:
+    - type: https
+      port: 8443
+      keyStorePath: iztl.keystore
+      keyStorePassword: Th3_iztl_s3cr3t
+      validateCerts: false
+      validatePeers: false
+
+database:
+  driverClass: org.h2.Driver
+  user: root
+  password: r00t
+  url: jdbc:h2:./target/h2db
