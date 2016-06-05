@@ -24,7 +24,8 @@ public class IntegrationTest {
 
 	@ClassRule
 	public static final DropwizardAppRule<IztlAppConfig> RULE = new DropwizardAppRule<>(
-			IztlApp.class, CONFIG_PATH,
+			IztlApp.class,
+			CONFIG_PATH,
 			ConfigOverride.config("database.url", "jdbc:h2:" + TMP_FILE));
 
 	private iZettleClient iztlClient;
